@@ -7,15 +7,15 @@ OAuth2 [here](https://myanimelist.net/blog.php?eid=835707)
 
 ## Features
 
-[x] Login\
-[x] Show Seasonal Anime\
-[x] Show recommended Anime\
-[ ] Show recommended Manga\
-[x] Search for Anime\
-[ ] Search for Manga\
-[x] Show your Anime List\
-[ ] Show your Manga List\
-[x] Show Anime Details\
-[ ] Show Manga Details\
-[ ] Edit Anime\
-[ ] Edit Manga
+- [x] Login\
+- [x] Show Seasonal Anime\
+- [x] Show recommended Anime\
+- [ ] Show recommended Manga\
+- [x] Search for Anime\
+- [ ] Search for Manga\
+- [x] Show your Anime List\
+- [ ] Show your Manga List\
+- [x] Show Anime Details\
+- [ ] Show Manga Details\
+- [ ] Edit Anime\
+- [ ] Edit Manga
