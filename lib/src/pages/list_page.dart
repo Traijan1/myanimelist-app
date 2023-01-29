@@ -4,7 +4,8 @@ import 'package:myanimelist/src/services/myanimelist_service.dart';
 import 'package:myanimelist/src/widgets/entry_tile.dart';
 
 class ListPage extends StatefulWidget {
-  const ListPage({super.key});
+  final String status;
+  const ListPage({super.key, required this.status});
 
   @override
   State<ListPage> createState() => _ListPageState();
@@ -26,16 +27,15 @@ class _ListPageState extends State<ListPage> {
       future: list,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var data = snapshot.data!;
-
-          var completed = data.where((element) => element.status.status == "Completed").toList();
+          var status =
+              snapshot.data!.where((element) => element.status.status == widget.status).toList();
 
           return ListView.builder(
-              itemCount: completed.length,
+              itemCount: status.length,
               itemBuilder: (context, index) {
-                var entry = completed[index];
+                var entry = status[index];
                 var episodesWatched = entry.status.numEpisodesWatched;
-                var numEpisodes = entry.entry.numEpisodes!;
+                var numEpisodes = entry.entry.numEpisodes;
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
@@ -46,15 +46,17 @@ class _ListPageState extends State<ListPage> {
                         child: Column(
                           children: [
                             const SizedBox(height: 5),
-                            SizedBox(
-                              height: 10,
-                              child: LinearProgressIndicator(
-                                value: episodesWatched / numEpisodes,
+                            if (numEpisodes != null && numEpisodes != 0) ...[
+                              SizedBox(
+                                height: 10,
+                                child: LinearProgressIndicator(
+                                  value: episodesWatched / numEpisodes,
+                                ),
                               ),
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                            ],
                             Row(
                               children: [
                                 Expanded(child: Text('Score: ${entry.status.score}')),
