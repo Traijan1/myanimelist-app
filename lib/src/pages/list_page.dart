@@ -17,8 +17,7 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-
-    list = MyAnimeListService.getUserAnimeList();
+    list = MyAnimeListService.getUserAnimeList(widget.status);
   }
 
   @override
@@ -27,8 +26,7 @@ class _ListPageState extends State<ListPage> {
       future: list,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          var status =
-              snapshot.data!.where((element) => element.status.status == widget.status).toList();
+          var status = snapshot.data!;
 
           return ListView.builder(
               itemCount: status.length,

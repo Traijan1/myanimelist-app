@@ -24,11 +24,11 @@ class _HomePageState extends State<HomePage> {
     SearchPage(),
     TabBarView(
       children: [
-        ListPage(status: "Watching"),
-        ListPage(status: "Completed"),
-        ListPage(status: "Dropped"),
-        ListPage(status: "On Hold"),
-        ListPage(status: "Plan to watch"),
+        ListPage(status: "watching"),
+        ListPage(status: "completed"),
+        ListPage(status: "dropped"),
+        ListPage(status: "on_hold"),
+        ListPage(status: "plan_to_watch"),
       ],
     ),
   ];
