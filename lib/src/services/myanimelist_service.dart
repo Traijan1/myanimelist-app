@@ -121,7 +121,7 @@ class MyAnimeListService {
 
   static Future<List<UserAnimeListEntry>> getUserAnimeList() async {
     var response = await _get(
-        "https://api.myanimelist.net/v2/users/@me/animelist?fields=num_episodes,list_status,mean,alternative_titles&limit=100");
+        "https://api.myanimelist.net/v2/users/@me/animelist?fields=num_episodes,list_status,mean,alternative_titles&limit=999");
 
     List<UserAnimeListEntry> entries = [];
 

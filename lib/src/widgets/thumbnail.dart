@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class Thumbnail extends StatelessWidget {
   final String url;
   final double? width;
+  final double? height;
 
   const Thumbnail({
     super.key,
     required this.url,
     this.width,
+    this.height,
   });
 
   @override
@@ -15,9 +17,12 @@ class Thumbnail extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: Image.network(
+        fit: BoxFit.scaleDown,
         url,
         width: width,
+        height: height,
         cacheWidth: width?.toInt(),
+        cacheHeight: height?.toInt(),
         loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null) return child;
 
