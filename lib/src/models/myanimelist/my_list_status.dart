@@ -25,16 +25,16 @@ class MyListStatus {
   Map<String, dynamic> toJson() => _$MyListStatusToJson(this);
 
   void modifyData() {
-    switch (status) {
-      case "on_hold":
-        status = "On Hold";
-        break;
-      case "plan_to_watch":
-        status = "Plan to watch";
-        break;
-      default:
-        status = toBeginningOfSentenceCase(status);
-        break;
-    }
+    // switch (status) {
+    //   case "on_hold":
+    //     status = "On Hold";
+    //     break;
+    //   case "plan_to_watch":
+    //     status = "Plan to watch";
+    //     break;
+    //   default:
+    //     status = toBeginningOfSentenceCase(status);
+    //     break;
+    // }
   }
 }

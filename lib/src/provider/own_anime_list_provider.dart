@@ -8,7 +8,22 @@ class OwnAnimeListProvider extends ChangeNotifier {
   List<UserAnimeListEntry> _entries = [];
   List<UserAnimeListEntry> get entries => UnmodifiableListView(_entries);
 
-  void fetchData() async {
-    _entries = await MyAnimeListService.getUserAnimeList("Completed");
+  void fetchData({String? status}) async {
+    _addToList(await MyAnimeListService.getUserAnimeList(status));
+    notifyListeners();
+  }
+
+  void _addToList(List<UserAnimeListEntry> data) {
+    for (var entry in data) {
+      bool isNotInList = true;
+      for (var element in _entries) {
+        if (entry.entry.title == element.entry.title) {
+          isNotInList = false;
+          continue;
+        }
+      }
+
+      if (isNotInList) _entries.add(entry);
+    }
   }
 }

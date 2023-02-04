@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myanimelist/src/pages/list_page.dart';
 import 'package:myanimelist/src/pages/main_page.dart';
 import 'package:myanimelist/src/pages/search_page.dart';
+import 'package:myanimelist/src/provider/own_anime_list_provider.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
 import 'package:provider/provider.dart';
 
@@ -72,7 +73,12 @@ class _HomePageState extends State<HomePage> {
                 ),
         ),
         body: SafeArea(
-          child: Padding(padding: const EdgeInsets.only(top: 5), child: pages.elementAt(_index)),
+          child: Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: ChangeNotifierProvider(
+                create: (context) => OwnAnimeListProvider()..fetchData(),
+                builder: (context, child) => pages.elementAt(_index),
+              )),
         ),
         bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).colorScheme.primary,
