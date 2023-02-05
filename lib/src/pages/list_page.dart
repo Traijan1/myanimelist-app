@@ -17,7 +17,7 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     super.initState();
 
-    list = MyAnimeListService.getUserAnimeList();
+    list = MyAnimeListService.getUserAnimeList(null);
   }
 
   @override

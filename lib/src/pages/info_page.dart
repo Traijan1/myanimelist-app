@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
+import 'package:myanimelist/src/widgets/entry_info.dart';
 
 import '../models/myanimelist/anime_info_entry.dart';
 
@@ -31,9 +32,9 @@ class _InfoPageState extends State<InfoPage> {
           future: entry,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              var map = snapshot.data!;
-
-              return Text(map.title);
+              return EntryInfo(
+                entry: snapshot.data!,
+              );
             } else if (snapshot.hasError) {
               return Text(snapshot.error!.toString());
             }
