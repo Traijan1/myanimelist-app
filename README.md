@@ -5,6 +5,9 @@ It uses the official API found
 [here](https://myanimelist.net/apiconfig/references/api/v2) and a guide for
 OAuth2 [here](https://myanimelist.net/blog.php?eid=835707)
 
+It also uses the `dynamic_color` package, which allows the app to use the
+generated color palette that has been available since Android 12.
+
 ## Features
 
 - [x] Login

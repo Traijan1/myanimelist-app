@@ -31,6 +31,7 @@ class EntryTile extends StatelessWidget {
                   Thumbnail(
                     url: entry.mainPicture!.medium,
                     width: 85,
+                    height: 125,
                   ),
                   Positioned(
                     right: 0,

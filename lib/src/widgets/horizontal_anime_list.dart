@@ -30,7 +30,9 @@ class HorizontalAnimeList extends StatelessWidget {
               child: Column(
                 children: [
                   Thumbnail(
-                    url: entries[index].mainPicture!.medium,
+                    url: entries[index].mainPicture!.large!,
+                    width: 100,
+                    height: 150,
                   ),
                   const SizedBox(
                     height: 10,
