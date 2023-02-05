@@ -17,12 +17,7 @@ class _ListPageState extends State<ListPage> {
   @override
   void initState() {
     super.initState();
-<<<<<<< HEAD
-
-    list = MyAnimeListService.getUserAnimeList(null);
-=======
     context.read<OwnAnimeListProvider>().fetchData(status: widget.status);
->>>>>>> 3-finish-own-anime-list
   }
 
   @override

@@ -5,11 +5,7 @@ import 'package:myanimelist/src/models/myanimelist/user_anime_list_entry.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
 
 class OwnAnimeListProvider extends ChangeNotifier {
-<<<<<<< HEAD
   final List<UserAnimeListEntry> _entries = [];
-=======
-  List<UserAnimeListEntry> _entries = [];
->>>>>>> 3-finish-own-anime-list
   List<UserAnimeListEntry> get entries => UnmodifiableListView(_entries);
 
   void fetchData({String? status}) async {
