@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myanimelist/src/models/myanimelist/my_list_status.dart';
+import 'package:intl/intl.dart';
 import 'package:myanimelist/src/widgets/thumbnail.dart';
 
 import '../models/myanimelist/anime_list_entry.dart';

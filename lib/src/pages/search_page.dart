@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:myanimelist/src/models/myanimelist/anime_list_entry.dart';
 import 'package:myanimelist/src/pages/info_page.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
@@ -44,6 +45,17 @@ class _SearchPageState extends State<SearchPage> {
     MyAnimeListService.getAnimes(searchValue, limit: 50).then((value) {
       setState(() => entries = value);
     });
+  }
+
+  String modifyStatus(String status) {
+    switch (status) {
+      case "on_hold":
+        return "On Hold";
+      case "plan_to_watch":
+        return "Plan to watch";
+      default:
+        return toBeginningOfSentenceCase(status)!;
+    }
   }
 
   @override
@@ -99,7 +111,7 @@ class _SearchPageState extends State<SearchPage> {
                     ],
                     if (entry.myListStatus != null && entry.myListStatus!.status != null) ...[
                       const Spacer(),
-                      Text(entry.myListStatus!.status!)
+                      Text(modifyStatus(entry.myListStatus!.status!))
                     ],
                   ],
                 ),

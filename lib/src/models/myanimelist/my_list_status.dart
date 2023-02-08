@@ -16,25 +16,7 @@ class MyListStatus {
   MyListStatus(this.status, this.score, this.numEpisodesWatched, this.isRewatching, this.startDay,
       this.finishDay, this.tags);
 
-  factory MyListStatus.fromJson(Map<String, dynamic> json) {
-    var value = _$MyListStatusFromJson(json);
-    value.modifyData();
+  factory MyListStatus.fromJson(Map<String, dynamic> json) => _$MyListStatusFromJson(json);
 
-    return value;
-  }
   Map<String, dynamic> toJson() => _$MyListStatusToJson(this);
-
-  void modifyData() {
-    // switch (status) {
-    //   case "on_hold":
-    //     status = "On Hold";
-    //     break;
-    //   case "plan_to_watch":
-    //     status = "Plan to watch";
-    //     break;
-    //   default:
-    //     status = toBeginningOfSentenceCase(status);
-    //     break;
-    // }
-  }
 }

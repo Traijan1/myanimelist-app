@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:myanimelist/src/models/myanimelist/user_anime_list_entry.dart';
 import 'package:myanimelist/src/provider/own_anime_list_provider.dart';
-import 'package:myanimelist/src/services/myanimelist_service.dart';
 import 'package:myanimelist/src/widgets/entry_tile.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +24,8 @@ class _ListPageState extends State<ListPage> {
   Widget build(BuildContext context) {
     return Consumer<OwnAnimeListProvider>(
       builder: (_, value, __) {
-        var status = value.entries
-            .where(
-              (element) => element.status.status == widget.status,
-            )
-            .toList();
+        var status =
+            value.entries.where((element) => element.status.status == widget.status).toList();
 
         return ListView.builder(
           itemCount: status.length,

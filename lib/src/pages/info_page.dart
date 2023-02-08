@@ -27,21 +27,25 @@ class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: FutureBuilder(
-          future: entry,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return EntryInfo(
-                entry: snapshot.data!,
-              );
-            } else if (snapshot.hasError) {
-              return Text(snapshot.error!.toString());
-            }
+      appBar: AppBar(title: const Text("Info")),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(Icons.edit_note, size: 36),
+      ),
+      body: FutureBuilder(
+        future: entry,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              child: EntryInfo(entry: snapshot.data!),
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error!.toString());
+          }
 
-            return const Text("Loading");
-          },
-        ),
+          return const Text("Loading");
+        },
       ),
     );
   }
