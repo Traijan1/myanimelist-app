@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:myanimelist/src/models/myanimelist/anime_info_entry.dart';
+import 'package:myanimelist/src/pages/info_page.dart';
 import 'package:myanimelist/src/widgets/expandable.dart';
 import 'package:myanimelist/src/widgets/expandable_text.dart';
 import 'package:myanimelist/src/widgets/info_card.dart';
@@ -99,27 +101,30 @@ class EntryInfo extends StatelessWidget {
                     .map(
                       (e) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Row(
-                          children: [
-                            Thumbnail(
-                              url: e.node.mainPicture.medium,
-                              width: MediaQuery.of(context).size.width * 0.15,
-                            ),
-                            const SizedBox(width: 15),
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    e.node.title,
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(e.relationTypeFormatted),
-                                ],
+                        child: GestureDetector(
+                          onTap: () => context.push('${InfoPage.route}/${e.node.id}'),
+                          child: Row(
+                            children: [
+                              Thumbnail(
+                                url: e.node.mainPicture.medium,
+                                width: MediaQuery.of(context).size.width * 0.15,
                               ),
-                            ),
-                          ],
+                              const SizedBox(width: 15),
+                              Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      e.node.title,
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(e.relationTypeFormatted),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -128,7 +133,7 @@ class EntryInfo extends StatelessWidget {
             ),
           ],
           if (entry.studios != null && entry.studios!.isNotEmpty) ...[
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Expandable(
               title: "Studios",
               child: Column(

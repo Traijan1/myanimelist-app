@@ -24,7 +24,7 @@ class _ExpandableState extends State<Expandable> {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: Theme.of(context).colorScheme.primaryContainer,
+              color: Theme.of(context).colorScheme.primary,
             ),
             height: 30,
             width: double.infinity,
@@ -36,11 +36,12 @@ class _ExpandableState extends State<Expandable> {
                       child: Text(
                     widget.title,
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.primary,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      fontWeight: FontWeight.bold,
                     ),
                   )),
                   Icon(_isExpanded ? Icons.arrow_upward : Icons.arrow_downward,
-                      color: Theme.of(context).colorScheme.primary),
+                      color: Theme.of(context).colorScheme.primaryContainer),
                 ],
               ),
             ),

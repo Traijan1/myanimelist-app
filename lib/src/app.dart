@@ -43,11 +43,11 @@ class MyApp extends StatelessWidget {
             useMaterial3: true,
             colorScheme: lightDynamic ??
                 ColorScheme.fromSwatch(primarySwatch: primarySwatch, brightness: Brightness.light)
-                    .copyWith(primaryContainer: Colors.white24, secondary: primarySwatch)),
+                    .copyWith(primaryContainer: Colors.white, secondary: primarySwatch)),
         darkTheme: ThemeData(
             colorScheme: darkDynamic ??
                 ColorScheme.fromSwatch(primarySwatch: primarySwatch, brightness: Brightness.dark)
-                    .copyWith(primaryContainer: Colors.black45, secondary: primarySwatch)),
+                    .copyWith(primaryContainer: Colors.black, secondary: primarySwatch)),
         themeMode: ThemeMode.dark,
       );
     });
