@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:myanimelist/src/provider/main_page_provider.dart';
+import 'package:myanimelist/src/widgets/entry_grid.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/list_row.dart';
-
 class MainPage extends StatefulWidget {
-  const MainPage({super.key});
+  final int index;
+  const MainPage({super.key, required this.index});
 
   @override
   State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
+  final EdgeInsets _padding = const EdgeInsets.only(top: 7.5);
+
   @override
   void initState() {
     super.initState();
@@ -21,14 +23,10 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     var provider = context.watch<MainPageProvider>();
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      child: Column(
-        children: [
-          ListRow(title: "Current Season", data: provider.seasonalAnime),
-          ListRow(title: "Recommended", data: provider.suggestedAnime),
-        ],
-      ),
-    );
+    if (widget.index == 0) {
+      return Padding(padding: _padding, child: EntryGrid(entries: provider.seasonalAnime));
+    } else {
+      return Padding(padding: _padding, child: EntryGrid(entries: provider.suggestedAnime));
+    }
   }
 }
