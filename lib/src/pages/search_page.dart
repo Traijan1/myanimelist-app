@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:myanimelist/src/models/myanimelist/anime_list_entry.dart';
 import 'package:myanimelist/src/pages/info_page.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
-import 'package:myanimelist/src/widgets/entry_tile.dart';
+import 'package:myanimelist/src/widgets/entry_list_tile.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -89,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
 
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: EntryTile(
+                child: ListEntryTile(
                   entry: entries[index],
                   bottomRow: [
                     if (entry.mediaType != null) ...[

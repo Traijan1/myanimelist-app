@@ -4,6 +4,7 @@ import 'package:myanimelist/src/models/myanimelist/anime_list_entry.dart';
 import 'package:myanimelist/src/models/myanimelist/main_picture.dart';
 
 import 'package:myanimelist/src/models/myanimelist/genres.dart';
+import 'package:myanimelist/src/models/myanimelist/recommendation.dart';
 import 'package:myanimelist/src/models/myanimelist/related_anime_edge.dart';
 import 'package:myanimelist/src/models/myanimelist/season.dart';
 import 'alternative_titles.dart';
@@ -18,11 +19,15 @@ class AnimeInfoEntry extends AnimeListEntry {
   List<MainPicture>? pictures;
   String? background;
   List<RelatedAnimeEdge> relatedAnime;
+  List<RelatedAnimeEdge> relatedManga;
+  List<Recommendation> recommendations;
 
   AnimeInfoEntry(
       this.pictures,
       this.background,
       this.relatedAnime,
+      this.relatedManga,
+      this.recommendations,
       super.id,
       super.alternativeTitles,
       super.averageEpisodeDuration,

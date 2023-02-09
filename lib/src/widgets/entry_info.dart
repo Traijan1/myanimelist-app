@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:myanimelist/src/models/myanimelist/anime_info_entry.dart';
+import 'package:myanimelist/src/models/myanimelist/related_anime_edge.dart';
 import 'package:myanimelist/src/pages/info_page.dart';
+import 'package:myanimelist/src/widgets/edge_tile.dart';
+import 'package:myanimelist/src/widgets/entry_list_tile.dart';
 import 'package:myanimelist/src/widgets/expandable.dart';
 import 'package:myanimelist/src/widgets/expandable_text.dart';
 import 'package:myanimelist/src/widgets/info_card.dart';
 import 'package:myanimelist/src/widgets/thumbnail.dart';
+
+import 'expandable_list.dart';
 
 class EntryInfo extends StatelessWidget {
   final AnimeInfoEntry entry;
@@ -94,41 +100,33 @@ class EntryInfo extends StatelessWidget {
           ExpandableText(text: entry.synopsis!),
           if (entry.relatedAnime.isNotEmpty) ...[
             const SizedBox(height: 20),
-            Expandable(
+            ExpandableList(
               title: "Related Anime",
-              child: Column(
-                children: entry.relatedAnime
-                    .map(
-                      (e) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: GestureDetector(
-                          onTap: () => context.push('${InfoPage.route}/${e.node.id}'),
-                          child: Row(
-                            children: [
-                              Thumbnail(
-                                url: e.node.mainPicture.medium,
-                                width: MediaQuery.of(context).size.width * 0.15,
-                              ),
-                              const SizedBox(width: 15),
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      e.node.title,
-                                    ),
-                                    const SizedBox(height: 5),
-                                    Text(e.relationTypeFormatted),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    )
-                    .toList(),
+              entries: entry.relatedAnime.map((e) => e.node).toList(),
+              builder: (context, id) => EdgeTile(
+                node: entry.relatedAnime[id].node,
+                bottomRow: Text(entry.relatedAnime[id].relationTypeFormatted),
+              ),
+            ),
+          ],
+          if (entry.relatedManga.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            ExpandableList(
+              title: "Related Manga",
+              entries: entry.relatedManga.map((e) => e.node).toList(),
+              builder: (context, id) => EdgeTile(
+                node: entry.relatedManga[id].node,
+                bottomRow: Text(entry.relatedManga[id].relationTypeFormatted),
+              ),
+            ),
+          ],
+          if (entry.recommendations.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            ExpandableList(
+              title: "Recommendations",
+              entries: entry.recommendations.map((e) => e.node).toList(),
+              builder: (context, id) => EdgeTile(
+                node: entry.recommendations[id].node,
               ),
             ),
           ],
@@ -141,7 +139,7 @@ class EntryInfo extends StatelessWidget {
                     .map(
                       (e) => Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(e.name),
+                        child: Align(alignment: Alignment.centerLeft, child: Text(e.name)),
                       ),
                     )
                     .toList(),

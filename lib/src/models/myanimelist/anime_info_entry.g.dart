@@ -15,6 +15,12 @@ AnimeInfoEntry _$AnimeInfoEntryFromJson(Map<String, dynamic> json) =>
       (json['related_anime'] as List<dynamic>)
           .map((e) => RelatedAnimeEdge.fromJson(e as Map<String, dynamic>))
           .toList(),
+      (json['related_manga'] as List<dynamic>)
+          .map((e) => RelatedAnimeEdge.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['recommendations'] as List<dynamic>)
+          .map((e) => Recommendation.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['id'] as int,
       json['alternative_titles'] == null
           ? null
@@ -90,4 +96,6 @@ Map<String, dynamic> _$AnimeInfoEntryToJson(AnimeInfoEntry instance) =>
       'pictures': instance.pictures,
       'background': instance.background,
       'related_anime': instance.relatedAnime,
+      'related_manga': instance.relatedManga,
+      'recommendations': instance.recommendations,
     };
