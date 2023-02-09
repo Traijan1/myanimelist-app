@@ -21,7 +21,12 @@ class _HomePageState extends State<HomePage> {
   int _index = 0;
 
   static const List<Widget> pages = [
-    MainPage(),
+    TabBarView(
+      children: [
+        MainPage(index: 0),
+        MainPage(index: 1),
+      ],
+    ),
     SearchPage(),
     TabBarView(
       children: [
@@ -42,8 +47,37 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    PreferredSizeWidget? tabs;
+    int index = 0;
+
+    if (_index == pages.length - 1) {
+      index = 5;
+      tabs = const TabBar(
+        isScrollable: true,
+        tabs: [
+          Tab(text: "Watching"),
+          Tab(text: "Completed"),
+          Tab(text: "Dropped"),
+          Tab(text: "On Hold"),
+          Tab(text: "Plan to Watch"),
+        ],
+      );
+    }
+
+    if (_index == 0) {
+      index = 2;
+
+      tabs = const TabBar(
+        isScrollable: true,
+        tabs: [
+          Tab(text: "Seasonal"),
+          Tab(text: "Recommended"),
+        ],
+      );
+    }
+
     return DefaultTabController(
-      length: 5,
+      length: index,
       child: Scaffold(
         appBar: AppBar(
           title: Row(
@@ -59,18 +93,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          bottom: _index != pages.length - 1
-              ? null
-              : const TabBar(
-                  isScrollable: true,
-                  tabs: [
-                    Tab(text: "Watching"),
-                    Tab(text: "Completed"),
-                    Tab(text: "Dropped"),
-                    Tab(text: "On Hold"),
-                    Tab(text: "Plan to Watch"),
-                  ],
-                ),
+          bottom: tabs,
         ),
         body: SafeArea(
           child: Padding(
