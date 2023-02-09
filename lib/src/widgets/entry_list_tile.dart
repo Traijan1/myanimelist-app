@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:myanimelist/src/models/myanimelist/my_list_status.dart';
+import 'package:intl/intl.dart';
 import 'package:myanimelist/src/widgets/thumbnail.dart';
 
 import '../models/myanimelist/anime_list_entry.dart';
 import '../pages/info_page.dart';
 
-class EntryTile extends StatelessWidget {
+class ListEntryTile extends StatelessWidget {
   final AnimeListEntry entry;
   final List<Widget> bottomRow;
 
-  const EntryTile({super.key, required this.entry, required this.bottomRow});
+  const ListEntryTile({super.key, required this.entry, required this.bottomRow});
 
   void navigateToInfoPage(BuildContext context, int id) {
     context.push('${InfoPage.route}/$id');

@@ -17,17 +17,16 @@ class Thumbnail extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(5),
       child: Image.network(
-        fit: BoxFit.scaleDown,
+        fit: BoxFit.fill,
         url,
         width: width,
         height: height,
+        isAntiAlias: true,
         cacheWidth: width?.toInt(),
         cacheHeight: height?.toInt(),
+        filterQuality: FilterQuality.high,
         loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
           if (loadingProgress == null) return child;
-
-          // if (loadingProgress.expectedTotalBytes != null &&
-          //     loadingProgress.cumulativeBytesLoaded == loadingProgress.expectedTotalBytes!) test();
 
           return Center(
             child: CircularProgressIndicator(

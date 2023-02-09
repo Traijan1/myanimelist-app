@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:myanimelist/src/models/myanimelist/anime_list_entry.dart';
 import 'package:myanimelist/src/pages/info_page.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
-import 'package:myanimelist/src/widgets/entry_tile.dart';
+import 'package:myanimelist/src/widgets/entry_list_tile.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -46,6 +47,17 @@ class _SearchPageState extends State<SearchPage> {
     });
   }
 
+  String modifyStatus(String status) {
+    switch (status) {
+      case "on_hold":
+        return "On Hold";
+      case "plan_to_watch":
+        return "Plan to watch";
+      default:
+        return toBeginningOfSentenceCase(status)!;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -77,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
 
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                child: EntryTile(
+                child: ListEntryTile(
                   entry: entries[index],
                   bottomRow: [
                     if (entry.mediaType != null) ...[
@@ -99,7 +111,7 @@ class _SearchPageState extends State<SearchPage> {
                     ],
                     if (entry.myListStatus != null && entry.myListStatus!.status != null) ...[
                       const Spacer(),
-                      Text(entry.myListStatus!.status!)
+                      Text(modifyStatus(entry.myListStatus!.status!))
                     ],
                   ],
                 ),

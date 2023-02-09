@@ -12,77 +12,90 @@ AnimeInfoEntry _$AnimeInfoEntryFromJson(Map<String, dynamic> json) =>
           ?.map((e) => MainPicture.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['background'] as String?,
+      (json['related_anime'] as List<dynamic>)
+          .map((e) => RelatedAnimeEdge.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['related_manga'] as List<dynamic>)
+          .map((e) => RelatedAnimeEdge.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      (json['recommendations'] as List<dynamic>)
+          .map((e) => Recommendation.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['id'] as int,
-      json['alternativeTitles'] == null
+      json['alternative_titles'] == null
           ? null
           : AlternativeTitles.fromJson(
-              json['alternativeTitles'] as Map<String, dynamic>),
-      json['averageEpisodeDuration'] as int?,
+              json['alternative_titles'] as Map<String, dynamic>),
+      json['average_episode_duration'] as int?,
       json['broadcast'] == null
           ? null
           : Broadcast.fromJson(json['broadcast'] as Map<String, dynamic>),
-      json['createdAt'] as String?,
-      json['endDate'] as String?,
+      json['created_at'] as String?,
+      json['end_date'] as String?,
       (json['genres'] as List<dynamic>?)
           ?.map((e) => Genre.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['title'] as String,
       (json['mean'] as num?)?.toDouble(),
-      json['mediaType'] as String?,
-      json['myListStatus'] == null
+      json['media_type'] as String?,
+      json['my_list_status'] == null
           ? null
-          : MyListStatus.fromJson(json['myListStatus'] as Map<String, dynamic>),
+          : MyListStatus.fromJson(
+              json['my_list_status'] as Map<String, dynamic>),
       json['nsfw'] as String?,
-      json['numEpisodes'] as int?,
-      json['numListUsers'] as int?,
-      json['numScoringUsers'] as int?,
+      json['num_episodes'] as int?,
+      json['num_list_users'] as int?,
+      json['num_scoring_users'] as int?,
       json['popularity'] as int?,
       json['rank'] as int?,
       json['rating'] as String?,
       json['source'] as String?,
-      json['startDate'] as String?,
-      json['startSeason'] == null
+      json['start_date'] as String?,
+      json['start_season'] == null
           ? null
-          : Season.fromJson(json['startSeason'] as Map<String, dynamic>),
+          : Season.fromJson(json['start_season'] as Map<String, dynamic>),
       json['status'] as String?,
       (json['studios'] as List<dynamic>?)
           ?.map((e) => AnimeStudio.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['synopsis'] as String?,
-      json['mainPicture'] == null
+      json['main_picture'] == null
           ? null
-          : MainPicture.fromJson(json['mainPicture'] as Map<String, dynamic>),
-      json['updatedAt'] as String?,
+          : MainPicture.fromJson(json['main_picture'] as Map<String, dynamic>),
+      json['updated_at'] as String?,
     );
 
 Map<String, dynamic> _$AnimeInfoEntryToJson(AnimeInfoEntry instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'mainPicture': instance.mainPicture,
-      'alternativeTitles': instance.alternativeTitles,
-      'startDate': instance.startDate,
-      'endDate': instance.endDate,
+      'main_picture': instance.mainPicture,
+      'alternative_titles': instance.alternativeTitles,
+      'start_date': instance.startDate,
+      'end_date': instance.endDate,
       'synopsis': instance.synopsis,
       'mean': instance.mean,
       'rank': instance.rank,
       'popularity': instance.popularity,
-      'numListUsers': instance.numListUsers,
-      'numScoringUsers': instance.numScoringUsers,
+      'num_list_users': instance.numListUsers,
+      'num_scoring_users': instance.numScoringUsers,
       'nsfw': instance.nsfw,
       'genres': instance.genres,
-      'createdAt': instance.createdAt,
-      'updatedAt': instance.updatedAt,
-      'mediaType': instance.mediaType,
+      'created_at': instance.createdAt,
+      'updated_at': instance.updatedAt,
+      'media_type': instance.mediaType,
       'status': instance.status,
-      'myListStatus': instance.myListStatus,
-      'numEpisodes': instance.numEpisodes,
-      'startSeason': instance.startSeason,
+      'my_list_status': instance.myListStatus,
+      'num_episodes': instance.numEpisodes,
+      'start_season': instance.startSeason,
       'broadcast': instance.broadcast,
       'source': instance.source,
-      'averageEpisodeDuration': instance.averageEpisodeDuration,
+      'average_episode_duration': instance.averageEpisodeDuration,
       'rating': instance.rating,
       'studios': instance.studios,
       'pictures': instance.pictures,
       'background': instance.background,
+      'related_anime': instance.relatedAnime,
+      'related_manga': instance.relatedManga,
+      'recommendations': instance.recommendations,
     };
