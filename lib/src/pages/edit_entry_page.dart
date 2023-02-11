@@ -18,6 +18,8 @@ class _EditEntryPageState extends State<EditEntryPage> {
   late TextEditingController progressController;
   late TextEditingController scoreController;
   String status = "";
+  bool showAlertDialogue = false;
+  bool showDeleteButton = false;
 
   void save() {
     MyAnimeListService.saveAnimeEntry(
@@ -41,24 +43,36 @@ class _EditEntryPageState extends State<EditEntryPage> {
         null,
         null,
       );
+
+      setState(() => showDeleteButton = true);
     }
+  }
+
+  void delete() {
+    MyAnimeListService.deleteAnimeEntry(widget.entry.id);
+    setState(() {
+      showAlertDialogue = false;
+      showDeleteButton = false;
+      widget.entry.myListStatus = null;
+    });
   }
 
   @override
   void initState() {
     super.initState();
 
-    var progress = "0";
-    var score = "0";
+    var progress = 0;
+    var score = 0;
 
     if (widget.entry.myListStatus != null) {
-      progress = widget.entry.myListStatus!.numEpisodesWatched.toString();
-      score = widget.entry.myListStatus!.score.toString();
+      progress = widget.entry.myListStatus!.numEpisodesWatched;
+      score = widget.entry.myListStatus!.score;
       status = widget.entry.myListStatus!.status!;
+      setState(() => showDeleteButton = true);
     }
 
-    progressController = TextEditingController(text: progress);
-    scoreController = TextEditingController(text: score);
+    progressController = TextEditingController(text: progress.toString());
+    scoreController = TextEditingController(text: score.toString());
   }
 
   @override
@@ -67,120 +81,146 @@ class _EditEntryPageState extends State<EditEntryPage> {
       appBar: AppBar(title: const Text("Edit")),
       body: Padding(
         padding: const EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Text(widget.entry.title,
-                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-            const Text("Status: "),
-            const SizedBox(height: 10),
-            GridView(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 3,
-                crossAxisSpacing: 7.5,
-                mainAxisSpacing: 7.5,
-                childAspectRatio: 3,
-              ),
-              shrinkWrap: true,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                StatusButton(
-                  currentStatus: status,
-                  text: "Watching",
-                  status: "watching",
-                  onClick: (status) => setState(() => this.status = status),
+                Text(widget.entry.title,
+                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                const SizedBox(height: 15),
+                const Text("Status: "),
+                const SizedBox(height: 10),
+                GridView(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 7.5,
+                    mainAxisSpacing: 7.5,
+                    childAspectRatio: 3,
+                  ),
+                  shrinkWrap: true,
+                  children: [
+                    StatusButton(
+                      currentStatus: status,
+                      text: "Watching",
+                      status: "watching",
+                      onClick: (status) => setState(() => this.status = status),
+                    ),
+                    StatusButton(
+                      currentStatus: status,
+                      text: "Completed",
+                      status: "completed",
+                      onClick: (status) => setState(() => this.status = status),
+                    ),
+                    StatusButton(
+                      currentStatus: status,
+                      text: "Plan to Watch",
+                      status: "plan_to_watch",
+                      onClick: (status) => setState(() => this.status = status),
+                    ),
+                    StatusButton(
+                      currentStatus: status,
+                      text: "On Hold",
+                      status: "on_hold",
+                      onClick: (status) => setState(() => this.status = status),
+                    ),
+                    StatusButton(
+                      currentStatus: status,
+                      text: "Dropped",
+                      status: "dropped",
+                      onClick: (status) => setState(() => this.status = status),
+                    ),
+                  ],
                 ),
-                StatusButton(
-                  currentStatus: status,
-                  text: "Completed",
-                  status: "completed",
-                  onClick: (status) => setState(() => this.status = status),
+                const SizedBox(height: 30),
+                Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Progress:"),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 50,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  controller: progressController,
+                                ),
+                              ),
+                              Text('/ ${widget.entry.numEpisodes}'),
+                            ],
+                          ),
+                        ],
+                      ),
+                      const SizedBox(width: 30),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text("Score:"),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 50,
+                                child: TextField(
+                                  textAlign: TextAlign.center,
+                                  keyboardType: TextInputType.number,
+                                  controller: scoreController,
+                                ),
+                              ),
+                              const Text('/ 10'),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                StatusButton(
-                  currentStatus: status,
-                  text: "Plan to Watch",
-                  status: "plan_to_watch",
-                  onClick: (status) => setState(() => this.status = status),
-                ),
-                StatusButton(
-                  currentStatus: status,
-                  text: "On Hold",
-                  status: "on_hold",
-                  onClick: (status) => setState(() => this.status = status),
-                ),
-                StatusButton(
-                  currentStatus: status,
-                  text: "Dropped",
-                  status: "dropped",
-                  onClick: (status) => setState(() => this.status = status),
+                const SizedBox(height: 30),
+                Center(
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      ElevatedButton(onPressed: save, child: const Text("Save")),
+                      if (showDeleteButton) ...[
+                        const SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: () => setState(() => showAlertDialogue = true),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context).colorScheme.error),
+                          child: const Text("Delete"),
+                        ),
+                      ]
+                    ],
+                  ),
                 ),
               ],
             ),
-            const SizedBox(height: 30),
-            Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Progress:"),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            width: 50,
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              keyboardType: TextInputType.number,
-                              controller: progressController,
-                            ),
-                          ),
-                          Text('/ ${widget.entry.numEpisodes}'),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 30),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Score:"),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            width: 50,
-                            child: TextField(
-                              textAlign: TextAlign.center,
-                              keyboardType: TextInputType.number,
-                              controller: scoreController,
-                            ),
-                          ),
-                          const Text('/ 10'),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+            if (showAlertDialogue)
+              Align(
+                alignment: Alignment.center,
+                child: AlertDialog(
+                  title: const Text("Delete anime from list?"),
+                  content:
+                      const Text("Are you sure, you want to delete this anime from your list?"),
+                  actions: [
+                    ElevatedButton(
+                      onPressed: delete,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Theme.of(context).colorScheme.error),
+                      child: const Text("Confirm"),
+                    ),
+                    ElevatedButton(
+                        onPressed: () => setState(() => showAlertDialogue = false),
+                        child: const Text("Cancel")),
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 30),
-            Center(
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ElevatedButton(onPressed: save, child: const Text("Save")),
-                  const SizedBox(width: 20),
-                  ElevatedButton(
-                    onPressed: save,
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.onErrorContainer),
-                    child: const Text("Delete"),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

@@ -147,12 +147,21 @@ class MyAnimeListService {
   }
 
   static void saveAnimeEntry(int id, String status, String progress, String score) async {
-    http.put(Uri.parse("https://api.myanimelist.net/v2/anime/$id/my_list_status"),
-        body: {
-          "status": status,
-          "score": score,
-          "num_watched_episodes": progress,
-        },
-        headers: _headers);
+    http.put(
+      Uri.parse("https://api.myanimelist.net/v2/anime/$id/my_list_status"),
+      body: {
+        "status": status,
+        "score": score,
+        "num_watched_episodes": progress,
+      },
+      headers: _headers,
+    );
+  }
+
+  static void deleteAnimeEntry(int id) async {
+    http.delete(
+      Uri.parse("https://api.myanimelist.net/v2/anime/$id/my_list_status"),
+      headers: _headers,
+    );
   }
 }
