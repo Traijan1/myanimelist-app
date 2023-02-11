@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:myanimelist/src/models/myanimelist/anime_info_entry.dart';
+import 'package:myanimelist/src/pages/edit_entry_page.dart';
 import 'package:myanimelist/src/pages/home_page.dart';
 import 'package:myanimelist/src/pages/info_page.dart';
 import 'package:myanimelist/src/pages/login_page.dart';
@@ -27,6 +29,10 @@ class MyApp extends StatelessWidget {
         GoRoute(
           path: '${InfoPage.route}/:id',
           builder: (context, state) => InfoPage(id: int.parse(state.params["id"]!)),
+        ),
+        GoRoute(
+          path: EditEntryPage.route,
+          builder: (context, state) => EditEntryPage(entry: state.extra! as AnimeInfoEntry),
         ),
       ],
     );

@@ -145,4 +145,14 @@ class MyAnimeListService {
 
     return entries;
   }
+
+  static void saveAnimeEntry(int id, String status, String progress, String score) async {
+    http.put(Uri.parse("https://api.myanimelist.net/v2/anime/$id/my_list_status"),
+        body: {
+          "status": status,
+          "score": score,
+          "num_watched_episodes": progress,
+        },
+        headers: _headers);
+  }
 }
