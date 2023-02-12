@@ -6,8 +6,6 @@ import 'package:myanimelist/src/provider/own_anime_list_provider.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/main_page_provider.dart';
-
 class HomePage extends StatefulWidget {
   static const String route = "/";
 

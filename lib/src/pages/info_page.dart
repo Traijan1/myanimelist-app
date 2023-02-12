@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:myanimelist/src/pages/edit_entry_page.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
 import 'package:myanimelist/src/widgets/entry_info.dart';
 
@@ -29,7 +31,7 @@ class _InfoPageState extends State<InfoPage> {
     return Scaffold(
       appBar: AppBar(title: const Text("Info")),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => entry.then((value) => context.push(EditEntryPage.route, extra: value)),
         child: const Icon(Icons.edit_note, size: 36),
       ),
       body: FutureBuilder(
