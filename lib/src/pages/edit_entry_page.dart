@@ -5,6 +5,8 @@ import 'package:myanimelist/src/models/myanimelist/anime_info_entry.dart';
 import 'package:myanimelist/src/models/myanimelist/my_list_status.dart';
 import 'package:myanimelist/src/services/myanimelist_service.dart';
 
+import '../widgets/status_button.dart';
+
 class EditEntryPage extends StatefulWidget {
   static const String route = "/editEntry";
   final AnimeInfoEntry entry;
@@ -22,6 +24,19 @@ class _EditEntryPageState extends State<EditEntryPage> {
   bool showDeleteButton = false;
 
   void save() {
+    if (status.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Set a status before save",
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+        ),
+      );
+      return;
+    }
+
     MyAnimeListService.saveAnimeEntry(
       widget.entry.id,
       status,
@@ -45,6 +60,16 @@ class _EditEntryPageState extends State<EditEntryPage> {
       );
 
       setState(() => showDeleteButton = true);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            "Sucessfully updated entry",
+            style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.background,
+        ),
+      );
     }
   }
 
@@ -54,6 +79,7 @@ class _EditEntryPageState extends State<EditEntryPage> {
       showAlertDialogue = false;
       showDeleteButton = false;
       widget.entry.myListStatus = null;
+      status = "";
     });
   }
 
@@ -213,9 +239,11 @@ class _EditEntryPageState extends State<EditEntryPage> {
                       onPressed: delete,
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.error),
-                      child: const Text("Confirm"),
+                      child: const Text("Delete"),
                     ),
                     ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.secondary),
                         onPressed: () => setState(() => showAlertDialogue = false),
                         child: const Text("Cancel")),
                   ],
@@ -224,61 +252,6 @@ class _EditEntryPageState extends State<EditEntryPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class StatusButton extends StatefulWidget {
-  final String currentStatus;
-  final String text;
-  final String status;
-  final Function(String) onClick;
-  const StatusButton(
-      {super.key,
-      required this.currentStatus,
-      required this.text,
-      required this.status,
-      required this.onClick});
-
-  @override
-  State<StatusButton> createState() => _StatusButtonState();
-}
-
-class _StatusButtonState extends State<StatusButton> {
-  bool currentStatus = false;
-  late ButtonStyle inactiveButton;
-
-  @override
-  void initState() {
-    super.initState();
-    currentStatus = widget.status == widget.currentStatus;
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    inactiveButton = ElevatedButton.styleFrom(
-      backgroundColor: Colors.transparent,
-      foregroundColor: Theme.of(context).colorScheme.primary,
-      side: BorderSide(
-        width: 1,
-        color: Theme.of(context).colorScheme.primary,
-      ),
-    );
-  }
-
-  @override
-  void didUpdateWidget(covariant StatusButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    currentStatus = widget.status == widget.currentStatus;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: currentStatus ? null : inactiveButton,
-      onPressed: () => widget.onClick(widget.status),
-      child: Text(widget.text),
     );
   }
 }

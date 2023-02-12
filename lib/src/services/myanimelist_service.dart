@@ -40,9 +40,6 @@ class MyAnimeListService {
   static Future<void> getProfile() async {
     var response = await _get("https://api.myanimelist.net/v2/users/@me");
 
-    print(response.statusCode);
-    print(response.body);
-
     user = User.fromJson(jsonDecode(response.body));
   }
 
@@ -69,8 +66,6 @@ class MyAnimeListService {
   static Future<AnimeInfoEntry> getAnimeInfo(int id) async {
     var response = await _get(
         "https://api.myanimelist.net/v2/anime/$id?fields=id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics");
-
-    print(jsonDecode(response.body)["related_manga"]);
 
     return AnimeInfoEntry.fromJson(jsonDecode(response.body));
   }
@@ -147,7 +142,7 @@ class MyAnimeListService {
   }
 
   static void saveAnimeEntry(int id, String status, String progress, String score) async {
-    http.put(
+    await http.put(
       Uri.parse("https://api.myanimelist.net/v2/anime/$id/my_list_status"),
       body: {
         "status": status,
@@ -159,7 +154,7 @@ class MyAnimeListService {
   }
 
   static void deleteAnimeEntry(int id) async {
-    http.delete(
+    await http.delete(
       Uri.parse("https://api.myanimelist.net/v2/anime/$id/my_list_status"),
       headers: _headers,
     );
